@@ -59,7 +59,13 @@
           var lat = position.coords.latitude, // 위도
               lon = position.coords.longitude; // 경도
 
-          var locPosition = new kakao.maps.LatLng(lat, lon); // 마커가 표시될 위치를 geolocation으로 얻어온 좌표로 생성합니다
+          var locPosition = new kakao.maps.LatLng(lat, lon); // 마커가 표시될 위치를 geolocation으로 얻어온 좌표로 
+          
+          var marker = new kakao.maps.Marker({ // 마커 생성
+           map: map, // 마커를 표시할 지도 객체
+          position: locPosition // 마커의 위치
+      });
+
           marker.setPosition(locPosition); // 마커 위치 업데이트
       });
   }
