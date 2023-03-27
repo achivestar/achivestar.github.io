@@ -1,0 +1,67 @@
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" type="text/css" href="todo.css" />
+</head>
+<body>
+
+<form>
+  <label for="todo-input">할 일</label>
+  <input type="text" id="todo-input" placeholder="할 일을 입력하세요." required/>
+  <button id="add-button">추가</button>
+</form>
+<div id="container">
+  <ul id="todo-list">
+    <!-- <div class="todo">
+      <li class="todo-content">내용</li>
+      <button class="complete-button">완료</button>
+      <button class="delete-button">삭제</button>
+    </div> -->
+  </ul>
+</div>
+<button id="getLocation">위치정보</button>
+<div id="result"></div>
+
+<script src="todo.js"></script>
+<script>
+
+  function showPosition(position){
+    document.querySelector("#result").innerHTML = `
+      <b>위도 : </b>${position.coords.latitude}, <b>경도 :</b>
+      ${position.coords.longitude}
+    `;
+  }
+
+  function errorPosition(err) {
+    alert(err.message);
+  }
+
+  const getLocation = document.getElementById("getLocation");
+  getLocation.addEventListener("click",function(e){
+    e.preventDefault();
+    if(navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(showPosition, errorPosition);
+
+      const options = {
+        enableHighAccuracy : true,
+        timeout:5000,  
+        maximumAge : 0
+      };
+
+      let watchId = navigator.geolocation.watchPosition(showPosition, errorPosition, options);
+
+      setTimeout(function(){
+        navigator.geolocation.clearWatch(watchId);
+      },30000);
+    }else{
+      alert("지오로케이션을 지원하지 않습니다.");
+    }
+  });
+
+
+</script>
+</body>
+</html>
